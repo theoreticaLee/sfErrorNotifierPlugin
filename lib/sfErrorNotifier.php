@@ -24,7 +24,7 @@ class sfErrorNotifier
 	static function notify404(sfEvent $event)
 	{
 		$e = $event->getSubject();
-		if (!($e instanceof Exception)){
+		if (!($e instanceof Exception) && sfContext::hasInstance()){
 			$uri = sfContext::getInstance()->getRequest()->getUri();
 			$e = new sfError404Exception("Page not found [404][uri: $uri]");
 		}
@@ -46,6 +46,7 @@ class sfErrorNotifier
 	
 	static function alert($message, $type = 'Alert', $data = array())
 	{
+		if (sfContext::hasInstance() == false) return;
 		if (!$to = sfConfig::get('app_sf_error_notifier_plugin_email_to')) return; 
 		
 		$context = sfContext::getInstance();
@@ -66,7 +67,7 @@ class sfErrorNotifier
 		
 		$subject = strtr(sfConfig::get('app_sf_error_notifier_plugin_email_subject'), array_combine($placeholders, array_values($data))); 
 		
-    $configuration->loadHelpers('Partial');
+		$configuration->loadHelpers('Partial');
 		$body = get_partial('sfErrorNotifier/notify', array('data' => $data, 'user' => $context->getUser()));
 		
 		$message = Swift_Message::newInstance()
