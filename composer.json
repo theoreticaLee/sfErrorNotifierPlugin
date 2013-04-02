@@ -1,0 +1,11 @@
+{
+    "name": "ibolmo/sf-error-notifier-plugin",
+    "type": "symfony1-plugin",
+    "description": "sfErrorNotifierPlugin sends automatically email notifications when application errors",
+    "homepage": "http://www.symfony-project.org/plugins/sfErrorNotifierPlugin",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1-dev"
+        }
+    }
+}
